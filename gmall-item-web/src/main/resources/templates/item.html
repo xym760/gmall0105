@@ -12,7 +12,7 @@
 	<body>
 		<div id="max">
 		<header>
-
+		<input type="text" th:value="${skuSaleAttrHashJsonStr}" id="valuesSku">
 					<div class="min">
 						<ul class="header_ul_left">
 							<li class="glyphicon glyphicon-home"> <a href="shouye.html" class="aa">首页</a></li>
@@ -60,7 +60,7 @@
 							<li style="border: 0;"><a href="../登录页面\index.html" class="aa">你好，请登录</a></li>
 							<li><a href="../注册页面\index.html" style="color: red;">免费注册</a> |</li>
 							<li><a href="javascript:;" class="aa">我的订单</a> |</li>
- 
+
 						</ul>
 					</div>
 				</header>
@@ -80,7 +80,7 @@
 							<li class="nav_down_ul_1" style="width: 24%;float: left;"><a href="javascript:;">全部商品分类</a>
 
 							</li>
-							 
+
 						</ul>
 					</div>
 				</div>
@@ -91,8 +91,8 @@
 
 			<div class="crumb-wrap">
 			<div class="w">
-	 
- 
+
+
 
 			</div>
 		</div>
@@ -140,7 +140,7 @@
 						<div class="boxx-one">
 							<ul>
 								<li>
-									 
+
 								</li>
 								<li>
 
@@ -153,7 +153,7 @@
 						<div class="box-name" th:text="${skuInfo?.skuName}">
 							华为 HUAWEI Mate 10 6GB+128GB 亮黑色 移动联通电信4G手机 双卡双待
 						</div>
- 
+
 						<div class="box-yuyue">
 							<div class="yuyue-one">
 								 热卖促销中
@@ -161,10 +161,10 @@
 							<div class="yuyue-two">
 								<ul>
 									<li>
-										 
+
 									</li>
 									<li>
-		 
+
 									</li>
 								</ul>
 							</div>
@@ -177,17 +177,17 @@
 									<span th:text="${skuInfo?.price}">4499.00</span>
 								</li>
 								<li>
-								 
+
 								</li>
 								<li>
 									<a href="">
-										 
+
 									</a>
 								</li>
 							</ul>
 						</div>
 						<div class="box-wrap clear">
-							 
+
 						</div>
 
 						<div class="box-stock">
@@ -196,13 +196,13 @@
 								<li class="box-stock-li">
 									<div class="box-stock-one">
 									</div>
- 
+
 
 								</li>
 								<li>
 									<span>无货</span>， 此商品暂时售完
 								</li>
- 
+
 							</ul>
 						</div>
 						 <div class="box-stock">
@@ -211,16 +211,16 @@
 								<li class="box-stock-li">
 									<div class="box-stock-one">
 									</div>
- 
+
 
 								</li>
 								<li  th:text="${skuInfo?.weight}+' kg'">
 									  10 kg
 								</li>
- 
+
 							</ul>
 						</div>
-						  
+
 						<div class="box-attr-3">
 						<br/>
 							<div class="box-attr-2 clear"  th:each="spuSaleAttr:${spuSaleAttrListCheckBySku}">
@@ -288,12 +288,12 @@
 							</div>
 						</div>
 
-						 
+
 					</div>
 
 				</div>
 			</div>
-			 
+
 
 			<div class="ShopXiangqing">
 				<div class="allLeft">
@@ -391,7 +391,7 @@
 						</li>
 
 					</ul>
- 
+
 					<ul class="shopjieshaos posi" style="display: none;">
 						<li class="jieshoa" style="background: #e4393c;">
 							<a href="#li1" style="color: white;">商品介绍</a>
@@ -975,11 +975,11 @@
 			</div>
 		</div>
 		<!--厂家服务-->
-		 
+
 			<div class="lianBao">
-	 
+
 			</div>
- 
+
 		</div>
 
 
@@ -987,7 +987,7 @@
 							</li>
 							<!--评价-->
 							<li class="PINgjia actives" id="li4">
-								 
+
 						</ul>
 					</div>
 				</div>
@@ -1020,35 +1020,21 @@
         }
 
         function switchSkuId() {
-            // 被选中属性
-            var checkDivs = $(".redborder div");
-            var valueIds="";
-            // 拼接成属性值串
-            for (var i = 0; i < checkDivs.length; i++) {
-                var saleAttrValueDiv = checkDivs.eq(i);
-                if(i>0){
-                    valueIds= valueIds+"|";
-                }
-                valueIds=valueIds+saleAttrValueDiv.attr("value");
-            }
-            //页面上的hashjson
-            var valuesSku = $("#valuesSku").attr("value");
-            var valuesSkuJson=JSON.parse(valuesSku);
-
-            // 看看hash有没有
-            var skuId= valuesSkuJson[valueIds];
-            // 当前sku
-            var skuIdSelf=$("#skuId").val();
-
-            // 判断是否跳转
-            if(skuId){
-                if(skuId==skuIdSelf){
-                    $("#cartBtn").attr("class","box-btns-two");
-                }else{
-                    window.location.href="/"+skuId+".html";
-                }
-            }else{
-                $("#cartBtn").attr("class","box-btns-two-off");
+            var skuSaleAttrValueJsonStr = $("#valuesSku").val();
+            // alert(skuSaleAttrValueJsonStr);——》{"242|244|":"106","240|244|":"109","241|243|":"107"}
+			var saleAttrValueIds = $(".redborder div");//得到被选中的销售属性的div
+            var k = "";
+			$(saleAttrValueIds).each(function(i,saleAttrValueId){//遍历被选中的div
+			    k = k + $(saleAttrValueId).attr("value")+"|";//k为被选中的销售属性的id，即pms_product_sale_attr_value表的id
+            });
+            alert(k);//alert(k);--> 240|244|
+            var v_skuId = skuSaleAttrValueJsonStr[k];
+            var skuSaleAttrValueJson = JSON.parse(skuSaleAttrValueJsonStr);//将其转换为JSON，方便查找
+            var v_skuId = skuSaleAttrValueJson[k];//得到选中的skuId
+            alert(v_skuId);// alert(v_skuId);--> 109
+            if(v_skuId){
+                //跳转到用户选中的商品页面
+                window.location.href = "http://item.gmall.com:8082/" + v_skuId + ".html";
             }
         }
 	</script>
