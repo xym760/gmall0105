@@ -12,10 +12,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Proxy;
+import java.util.*;
 
 /**
  * @author YuanmaoXu
@@ -30,10 +29,14 @@ public class ItemController {
     SpuService spuService;
 
     @RequestMapping("{skuId}.html")
-    public String item(@PathVariable String skuId, ModelMap map) {
+    public String item(@PathVariable String skuId, ModelMap map, HttpServletRequest request) {
+
+        String remoteAddr = request.getRemoteAddr();
+
+//        request.getHeader("");// nginx负载均衡的时候用
 
         //sku对象
-        PmsSkuInfo pmsSkuInfo = skuService.getSkuById(skuId);
+        PmsSkuInfo pmsSkuInfo = skuService.getSkuById(skuId, remoteAddr);
         map.put("skuInfo", pmsSkuInfo);
 
         //销售属性列表

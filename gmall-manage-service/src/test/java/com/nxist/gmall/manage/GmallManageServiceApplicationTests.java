@@ -8,6 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import redis.clients.jedis.Jedis;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GmallManageServiceApplicationTests {
@@ -17,8 +20,8 @@ public class GmallManageServiceApplicationTests {
 
     @Test
     public void contextLoads() {
-        Jedis jedis = redisUtil.getJedis();
-        System.out.println(jedis);
+//        Jedis jedis = redisUtil.getJedis();
+//        System.out.println(jedis);
     }
 
 }
